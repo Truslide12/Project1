@@ -13,3 +13,4 @@ function initMap() {
   script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
   document.getElementsByTagName('head')[0].appendChild(script);
 }
+
