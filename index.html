@@ -1,22 +1,140 @@
 <!DOCTYPE html>
+<html lang="en">
+​
 <head>
-
-
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- jQuery Library CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
+    <!-- Font Awesome Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!-- Google Font -->
+    <!-- Firebase Core JavaScript Link -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+    <!-- Specific Firebase products we want -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Duh! Travel Planner</title>
 </head>
-
+​
 <body>
-
-<div id="map"></div>
-<script async defersrc="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk&callback=initMap">
-    </script>
-
-<script rel="stylesheet" href="code.js"></script>
-
+    <!-- Initial Page -->
+    <header>
+        <div class="container" id="searchRegion">
+            <div class="row py-3 my-3" id="initialRow">
+                <div class="col">
+                    <h1 class="mb-1 text-right" id="initialP">Where would you like to visit in the United States?</h1>
+            
+                    <input type="text" class="form-control mb-2" id="areaInput" placeholder="Search Region...">
+        
+                    <button type="button" class="btn" id="letsGo"><i class="fa fa-plane"></i>&nbsp;&nbsp;&nbsp;Let's Go</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <br />
+   <!-- Enter Planner Page -->
+   <br />
+    <div class="container-fluid" id="plannerPage">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center">Welcome to Duh! Travel Planner</h2>
+            </div>
+        </div>
+​
+        <div class="row">
+            <!-- Select Region & Category -->
+            <div class="col-4" id="selectParts">
+                <!-- Show selected region -->
+                <div class="row">
+                    <div class="col">
+                        <div class="border p-2 my-4" id="selectedRegion">
+                            <p class="m-0"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Los Angeles</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reselect Region -->
+                <div class="row">
+                    <div class="col mb-4">
+                        <p class="font-weight-bold mb-1">Select Region: </p>
+                        <input type="text" class="form-control" id="reselectRegion" placeholder="San Francisco">
+                    </div>
+                </div>
+                <!-- Select Category -->
+                <div class="row">
+                    <div class="col">
+                        <form>
+                            <div class="form-group">
+                                <label for="selectCategory">Select Category: </label>
+                                <select class="form-control form-control-lg" id="selectCategory">
+                                    <option></option>
+                                    <option>Restaurants</option>
+                                    <option>Local & Nearby Events</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Submit -->
+                <div class="row">
+                    <div class="col mb-2">
+                        <button type="submit" class="btn btn-primary m-1" id="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Google Map Display -->
+            <div class="col-8 text-center" id="map">
+                <img class="img-fluid" src="usa.png" alt="a map of united states">
+            </div>
+        </div>
+        <br />
+​
+        <div class="row">
+            <!-- User Planner -->
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="float-right m-0" id="calendar">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                        <button type="button" class="float-right m-0" id="addPersonalEvents">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                        </button>
+                        <p class="m-0 text-center">My To-Do Planner</p>
+                    </div>
+                    <div class="card-body" id="toDoPlanner">
+​
+                    </div>
+                </div>
+            </div>
+​
+            <!-- Display List -->
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        Search Results
+                    </div>
+                    <div class="card-body">
+​
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br />
+    <!-- JavaScript Link -->
+    <script type="text/javascript" src="app.js"></script>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- Bootstrap JavaScript CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
+​
+</html>

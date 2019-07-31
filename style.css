@@ -1,10 +1,54 @@
-#map {
-    height: 100%;
-  }
-  /* Optional: Makes the sample page fill the window. */
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+*{
+    box-sizing: border-box;
+    /* overflow: auto; */
+}
+#category{
+    margin-right: 40px;
+    top: 290px;
+    right: 0;
+}
+/* .row{
+    margin-top: 350px !important;
+} */
+#initialP{
+    font-size: 26px;
+}
+body { 
+    background: url(travelPage.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#searchRegion, #plannerPage{
+    background: rgba(255, 255, 255, 0.699);
+}
+#selectedRegion{
+    background-color: darksalmon;
+}
+#searchRegion{
+    margin-top: 350px;
+}
+#selectParts{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+#map{
+    /* margin-left: 5px; */
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+img{
+    max-width: 100%;
+    height: auto;
+}
+.glyphicon-plus-sign:hover{
+    color: rgba(32, 178, 171, 0.719);
+}
+.glyphicon-calendar:hover{
+    color: rgba(32, 178, 171, 0.719);
+}
+.card-body{
+    clear: float; 
+}
 
