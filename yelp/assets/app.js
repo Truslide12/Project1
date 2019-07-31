@@ -33,6 +33,10 @@ var database = firebase.database();
 //     .then(function(response){
 
 //     })
+var region = $("#areaInput").val().trim();
+var local = $("#reselectRegion").val().trim();
+var catRest = $("#selectCategory").val("Restaurants");
+var catEvent = $("#selectCategory").val("Local & Nearby Events");
 
 var map;
 var service;
