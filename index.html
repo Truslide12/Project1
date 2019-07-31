@@ -66,7 +66,19 @@
                 <div class="row">
                     <div class="col mb-4">
                         <p class="font-weight-bold mb-1">Select Region: </p>
-                        <input type="text" class="form-control" id="reselectRegion" placeholder="San Francisco">
+                        <form>
+                            <div class="form-row">
+                              <div class="col-7">
+                                <input type="text" class="form-control" placeholder="City">
+                              </div>
+                              <div class="col">
+                                <input type="text" class="form-control" placeholder="State">
+                              </div>
+                              <div class="col">
+                                <input type="text" class="form-control" placeholder="Zip">
+                              </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <!-- Select Category -->
@@ -120,7 +132,7 @@
                                             <div class="form-group">
                                                 <label for="inputDate">Date:</label>
                                                 <input class="form-control form-control-sm text-primary date mb-1" type="date" id="start-date">
-                                                <button type="button" class="btn btn-xs">Submit</button>
+                                                <button type="button" class="btn btn-xs btn-primary">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -136,7 +148,7 @@
                                             <div class="form-group m-0">
                                                 <label for="comment">Add/Create Your Own Events:</label>
                                                 <textarea class="form-control mb-1" rows="5" id="comment"></textarea>
-                                                <button type="button" class="btn btn-xs">Submit</button>
+                                                <button type="button" class="btn btn-xs btn-primary">Submit</button>
                                             </div>
                                         </form>
                                     </div>
