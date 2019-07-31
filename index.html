@@ -21,6 +21,8 @@
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Duh! Travel Planner</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk"
+    async defer></script>
 </head>
 ​
 <body>
@@ -89,9 +91,7 @@
                 </div>
             </div>
             <!-- Google Map Display -->
-            <div class="col-8 text-center" id="map">
-                <img class="img-fluid" src="usa.png" alt="a map of united states">
-            </div>
+            <div class="col-8 text-center" id="map"></div>
         </div>
         <br />
 ​
@@ -130,11 +130,12 @@
     </div>
     <br />
     <!-- JavaScript Link -->
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="code.js"></script>
     <!-- jQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JavaScript CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </body>
 ​
 </html>
