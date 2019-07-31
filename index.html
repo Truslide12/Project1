@@ -20,9 +20,10 @@
     <!-- Specific Firebase products we want -->
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Duh! Travel Planner</title>
+    <!-- Google Maps CDN -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk"
     async defer></script>
+    <title>Duh! Travel Planner</title>
 </head>
 ​
 <body>
@@ -100,16 +101,52 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <button type="button" class="float-right m-0" id="calendar">
-                            <span class="glyphicon glyphicon-calendar"></span>
+
+                        <button type="button" class="float-right ml-3 rounded" id="calendar">
+                            <span class="glyphicon glyphicon-calendar" data-toggle="collapse" data-target="#addDate" aria-expanded="false" aria-controls="addDate"></span>
                         </button>
-                        <button type="button" class="float-right m-0" id="addPersonalEvents">
-                            <span class="glyphicon glyphicon-plus-sign"></span>
+                        <button type="button" class="float-right rounded" id="addPersonalEvents">
+                            <span class="glyphicon glyphicon-plus-sign" data-toggle="collapse" data-target="#addPersonal" aria-expanded="false" aria-controls="addPersonal"></span>
                         </button>
-                        <p class="m-0 text-center">My To-Do Planner</p>
+                        <p class="m-0">My To-Do Planner</p>
                     </div>
                     <div class="card-body" id="toDoPlanner">
-​
+                        <!-- Calendar -->
+                        <div class="row">
+                            <div class="col">
+                                <div class="collapse" id="addDate">
+                                    <div class="card card-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="inputDate">Date:</label>
+                                                <input class="form-control form-control-sm text-primary date mb-1" type="date" id="start-date">
+                                                <button type="button" class="btn btn-xs">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add Personal Events -->
+                        <div class="row">
+                            <div class="col">
+                                <div class="collapse" id="addPersonal">
+                                    <div class="card card-body">
+                                        <form>
+                                            <div class="form-group m-0">
+                                                <label for="comment">Add/Create Your Own Events:</label>
+                                                <textarea class="form-control mb-1" rows="5" id="comment"></textarea>
+                                                <button type="button" class="btn btn-xs">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- User Planner -->
+                        <div id="userPlanner">
+
+                        </div>
                     </div>
                 </div>
             </div>
