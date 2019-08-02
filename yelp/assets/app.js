@@ -61,7 +61,7 @@ console.log(autocomplete);
 
   // Set the data fields to return when the user selects a place.
   autocomplete.setFields(
-      ['address_components', 'geometry', 'icon', 'name']);
+      ['address_components', 'place_id', 'geometry', 'icon', 'name']);
     
   var infowindow = new google.maps.InfoWindow();
   var infowindowContent = document.getElementById('infowindow-content');
@@ -90,6 +90,11 @@ console.log(autocomplete);
       map.setCenter(place.geometry.location);
       map.setZoom(17);  // Why 17? Because it looks good.
     }
+    marker.setPlace({
+      placeId: place.place_id,
+      location: place.geometry.location
+    })
+
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
 
@@ -132,46 +137,30 @@ console.log(autocomplete);
     var request = {
       location: center,
       radius: 32000,
-      types: ['bars', 'restaurants', 'cafe']
+      types: ['bars', 'restaurants', 'cafe'],
     };
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch(request, callback);
 }
+
 function callback(results, status){
   if (status == google.maps.places.PlacesServiceStatus.OK){
     for (var i = 0; i < results.length; i++){
       createMarker(results[i]);
     }
+    console.log(marker.place.placeId);
+
   }
 }
 function createMarker (place){
   var placeLoc = place.geometry.location
   var marker = new google.maps.Marker({
     map:map,
-    position: place.geometry.location
+    position: place.geometry.location,
   })
+  // google.maps.event.addListener(marker, 'click', function() {
+  //   infowindow.setContent(place.name);
+  //   infowindow.open(map, this);
+  // })
+
 }
-
-// var request = {
-//   placeId: 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-//   fields: ['name', 'formatted_address', 'place_id', 'geometry']
-// };
-
-// var infowindow = new google.maps.InfoWindow();
-// var service = new google.maps.places.PlacesService(map);
-
-// service.getDetails(request, function(place, status) {
-//   if (status === google.maps.places.PlacesServiceStatus.OK) {
-//     var marker = new google.maps.Marker({
-//       map: map,
-//       position: place.geometry.location
-//     });
-//     google.maps.event.addListener(marker, 'click', function() {
-//       infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-//         'Place ID: ' + place.place_id + '<br>' +
-//         place.formatted_address + '</div>');
-//       infowindow.open(map, this);
-//     });
-//   }
-// });
-
