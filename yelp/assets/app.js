@@ -12,30 +12,6 @@
 // firebase.initializeApp(config);
 // var database = firebase.database();
 
-// var region = document.getElementById("areaInput");
-// var local = document.getElementById("reselectRegion");
-// var categ = document.getElementById("selectCategory");
-
-
-// // var map;
-// // var service;
-// // var infowindow;
-
-// // var search;
-// // $("#letsGo.btn").on("click", function(){
-// //     search = region;
-// //     // setAutocompleteCountry();
-// //     // initService();
-// // })
-
-// // $("#submit").on("click",function(){
-// //     search = (local + categ);
-// //     // setAutocompleteCountry();
-// //     // initService();
-// // })
-// var city = document.getElementById('city');
-// var state = document.getElementById('state');
-// var tripSite = city + ',' + state + ',' + 'usa';
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -53,7 +29,7 @@ function initMap() {
   var autocomplete = new google.maps.places.Autocomplete(input);
 
   // var service = new google.maps.places.PlacesService(map);
-console.log(autocomplete);
+console.log();
   // Bind the map's bounds (viewport) property to the autocomplete object,
   // so that the autocomplete requests use the current map bounds for the
   // bounds option in the request.
@@ -61,7 +37,7 @@ console.log(autocomplete);
 
   // Set the data fields to return when the user selects a place.
   autocomplete.setFields(
-      ['address_components', 'place_id', 'geometry', 'icon', 'name']);
+      ['address_components', 'place_id', 'rating', 'geometry', 'icon', 'name']);
     
   var infowindow = new google.maps.InfoWindow();
   var infowindowContent = document.getElementById('infowindow-content');
@@ -76,6 +52,9 @@ console.log(autocomplete);
     marker.setVisible(false);
     var place = autocomplete.getPlace();
     console.log(place);
+    console.log(place.name);
+    console.log(place.place_id);
+    console.log(place.rating);
     if (!place.geometry) {
       // User entered the name of a Place that was not suggested and
       // pressed the Enter key, or the Place Details request failed.
@@ -111,28 +90,27 @@ console.log(autocomplete);
     infowindowContent.children['place-name'].textContent = place.name;
     infowindowContent.children['place-address'].textContent = address;
     infowindow.open(map, marker);
-    // google.maps.places.PlaceResult
   });
 
   // Sets a listener on a radio button to change the filter type on Places
   // Autocomplete.
-  function setupClickListener(id, types) {
-    var radioButton = document.getElementById(id);
-    radioButton.addEventListener('click', function() {
-      autocomplete.setTypes(types);
-    });
-  }
+  // function setupClickListener(id, types) {
+  //   var radioButton = document.getElementById(id);
+  //   radioButton.addEventListener('click', function() {
+  //     autocomplete.setTypes(types);
+  //   });
+  // }
 
-  setupClickListener('changetype-all', []);
-  setupClickListener('changetype-address', ['address']);
-  setupClickListener('changetype-establishment', ['establishment']);
-  setupClickListener('changetype-geocode', ['geocode']);
+  // setupClickListener('changetype-all', []);
+  // setupClickListener('changetype-address', ['address']);
+  // setupClickListener('changetype-establishment', ['establishment']);
+  // setupClickListener('changetype-geocode', ['geocode']);
 
-  document.getElementById('use-strict-bounds')
-      .addEventListener('click', function() {
-        console.log('Checkbox clicked! New state=' + this.checked);
-        autocomplete.setOptions({strictBounds: this.checked});
-      });
+  // document.getElementById('use-strict-bounds')
+  //     .addEventListener('click', function() {
+  //       console.log('Checkbox clicked! New state=' + this.checked);
+  //       autocomplete.setOptions({strictBounds: this.checked});
+  //     });
     var center = new google.maps.LatLng();
     var request = {
       location: center,
@@ -148,19 +126,13 @@ function callback(results, status){
     for (var i = 0; i < results.length; i++){
       createMarker(results[i]);
     }
-    console.log(marker.place.placeId);
-
   }
 }
 function createMarker (place){
-  var placeLoc = place.geometry.location
-  var marker = new google.maps.Marker({
+  placeLoc = place.geometry.location
+  marker = new google.maps.Marker({
     map:map,
     position: place.geometry.location,
+    icon: photos[0].getUrl({maxWidth: 35, maxHeight: 35})
   })
-  // google.maps.event.addListener(marker, 'click', function() {
-  //   infowindow.setContent(place.name);
-  //   infowindow.open(map, this);
-  // })
-
 }
