@@ -52,6 +52,8 @@ function initMap() {
 
   var autocomplete = new google.maps.places.Autocomplete(input);
 
+  // var service = new google.maps.places.PlacesService(map);
+console.log(autocomplete);
   // Bind the map's bounds (viewport) property to the autocomplete object,
   // so that the autocomplete requests use the current map bounds for the
   // bounds option in the request.
@@ -60,7 +62,7 @@ function initMap() {
   // Set the data fields to return when the user selects a place.
   autocomplete.setFields(
       ['address_components', 'geometry', 'icon', 'name']);
-
+    
   var infowindow = new google.maps.InfoWindow();
   var infowindowContent = document.getElementById('infowindow-content');
   infowindow.setContent(infowindowContent);
@@ -73,6 +75,7 @@ function initMap() {
     infowindow.close();
     marker.setVisible(false);
     var place = autocomplete.getPlace();
+    console.log(place);
     if (!place.geometry) {
       // User entered the name of a Place that was not suggested and
       // pressed the Enter key, or the Place Details request failed.
@@ -125,63 +128,50 @@ function initMap() {
         console.log('Checkbox clicked! New state=' + this.checked);
         autocomplete.setOptions({strictBounds: this.checked});
       });
-      console.log(marker.anchorPoint);
+    var center = new google.maps.LatLng();
+    var request = {
+      location: center,
+      radius: 32000,
+      types: ['bars', 'restaurants', 'cafe']
+    };
+    var service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, callback);
 }
-// var ac = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
-// // $("#results").append("<li>" + ac + "</li>");
-// google.maps.event.addListener(ac, 'place_changed', function(){
-//     var place = ac.getPlace();
-//     console.log(place.formatted_address);
-//     console.log(place.url);
-//     console.log(place.geometry.location);
-//     types: ['geocode']
-//     types: ['establishment']
-//     types: ['(regions)']
-//     types: ['(cites)']
-// })
-// console.log(ac);
+function callback(results, status){
+  if (status == google.maps.places.PlacesServiceStatus.OK){
+    for (var i = 0; i < results.length; i++){
+      createMarker(results[i]);
+    }
+  }
+}
+function createMarker (place){
+  var placeLoc = place.geometry.location
+  var marker = new google.maps.Marker({
+    map:map,
+    position: place.geometry.location
+  })
+}
 
-
-// var input = document.getElementById('searchTextField');
-// var options = {
-//   types: ['geocode', 'establishment', '(regions)', '(cities)'],
-//   componentRestrictions: {country: 'us'}
+// var request = {
+//   placeId: 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+//   fields: ['name', 'formatted_address', 'place_id', 'geometry']
 // };
-// console.log(input);
 
-// autocomplete = new google.maps.places.Autocomplete(input, options);
-// console.log(autocomplete);
+// var infowindow = new google.maps.InfoWindow();
+// var service = new google.maps.places.PlacesService(map);
 
-// function setAutocompleteCountry() {
-//     var country = document.getElementById('country').value;
-//     if (country == 'all') {
-//       autocomplete.setComponentRestrictions({'country': []});
-//       map.setCenter({lat: 15, lng: 0});
-//       map.setZoom(2);
-//     } else {
-//       autocomplete.setComponentRestrictions({'country': country});
-//       map.setCenter(countries[country].center);
-//       map.setZoom(countries[country].zoom);
-//     }
-//     clearResults();
-//     clearMarkers();
+// service.getDetails(request, function(place, status) {
+//   if (status === google.maps.places.PlacesServiceStatus.OK) {
+//     var marker = new google.maps.Marker({
+//       map: map,
+//       position: place.geometry.location
+//     });
+//     google.maps.event.addListener(marker, 'click', function() {
+//       infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+//         'Place ID: ' + place.place_id + '<br>' +
+//         place.formatted_address + '</div>');
+//       infowindow.open(map, this);
+//     });
 //   }
+// });
 
-//   function initService() {
-//     var displaySuggestions = function(predictions, status) {
-//       if (status != google.maps.places.PlacesServiceStatus.OK) {
-//         alert(status);
-//         return;
-//       }
-  
-//       predictions.forEach(function(prediction) {
-//         var li = document.createElement('li');
-//         li.appendChild(document.createTextNode(prediction.description));
-//         document.getElementById('results').appendChild(li);
-//       });
-//     };
-  
-//     var service = new google.maps.places.AutocompleteService();
-//     service.getQueryPredictions({ input: 'region' }, displaySuggestions);
-//     service.getQueryPredictions({ input: 'local' }, displaySuggestions);
-//   }
