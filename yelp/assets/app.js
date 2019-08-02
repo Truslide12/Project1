@@ -33,18 +33,18 @@
 // //     // setAutocompleteCountry();
 // //     // initService();
 // // })
-var city = document.getElementById('city');
-var state = document.getElementById('state');
-var tripSite = city + ',' + state + ',' + 'usa';
+// var city = document.getElementById('city');
+// var state = document.getElementById('state');
+// var tripSite = city + ',' + state + ',' + 'usa';
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 34.0522, long: 118.2437},
+    center: { lat: 34.0522, lng: -118.2437},
     zoom: 13
   })
   var card = document.getElementById('pac-card');
-  // var input = document.getElementById('pac-input');
-  var input = tripSite;
+  var input = document.getElementById('pac-input');
+  // var input = tripSite;
   var types = document.getElementById('type-selector');
   var strictBounds = document.getElementById('strict-bounds-selector');
 
@@ -125,6 +125,7 @@ function initMap() {
         console.log('Checkbox clicked! New state=' + this.checked);
         autocomplete.setOptions({strictBounds: this.checked});
       });
+      console.log(marker.anchorPoint);
 }
 // var ac = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
 // // $("#results").append("<li>" + ac + "</li>");
