@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 ​
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,55 +11,77 @@
     <!-- Font Awesome Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Codystar|Libre+Baskerville|Niconne|Reenie+Beanie&display=swap"
+        rel="stylesheet">
     <!-- Firebase Core JavaScript Link -->
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
     <!-- Specific Firebase products we want -->
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <!-- Google Maps CDN -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk"
-    async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk" async
+        defer></script>
     <title>Duh! Travel Planner</title>
 </head>
 ​
+
 <body>
     <!-- Initial Page -->
     <header>
         <div class="container" id="searchRegion">
-            <div class="row py-3 my-3" id="initialRow">
-                <div class="col">
+            <div class="row py-3 my-3">
+                <div class="col" id="initialRow">
                     <h1 class="mb-1 text-right" id="initialP">Where would you like to visit in the United States?</h1>
-            
-                    <input type="text" class="form-control mb-2" id="areaInput" placeholder="Search Region...">
-        
-                    <button type="button" class="btn" id="letsGo"><i class="fa fa-plane"></i>&nbsp;&nbsp;&nbsp;Let's Go</button>
+
+                    <input type="text" class="form-control mb-2" id="areaInput"
+                        placeholder="Search by City, State or Zip Code..." required>
+
+                    <button type="button" class="btn" id="letsGo"><i class="fa fa-plane"></i>&nbsp;&nbsp;&nbsp;Let's
+                        Go</button>
                 </div>
             </div>
         </div>
     </header>
     <br />
-   <!-- Enter Planner Page -->
-   <br />
+    <!-- Enter Planner Page -->
+    <br />
     <div class="container-fluid" id="plannerPage">
         <div class="row">
             <div class="col">
-                <h2 class="text-center">Welcome to Duh! Travel Planner</h2>
+                <h2 class="text-center" id="welcome">Welcome to <span id="duh">Duh!</span> Travel Planner</h2>
             </div>
         </div>
-​
+        ​
         <div class="row">
             <!-- Select Region & Category -->
             <div class="col-4" id="selectParts">
                 <!-- Show selected region -->
                 <div class="row">
                     <div class="col">
-                        <div class="border p-2 my-4" id="selectedRegion">
-                            <p class="m-0"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Los Angeles</p>
+                        <div class="row">
+                            <div class="col-10">
+                                <div id="areaDisplay">
+                                    <!-- <div id="area-0" class="border p-2 my-4 selectedRegion">
+                                        <p class="m-0"><span
+                                                class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Los Angeles
+                                        </p>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div id="trashButton">
+                                    <!-- <button data-trash="0" type="button" class="trash float-right ml-3 my-4 rounded">
+                                        <span class="glyphicon glyphicon-trash" data-toggle="collapse"
+                                            data-target="#remover" aria-expanded="false" aria-controls="remover"></span>
+                                    </button> -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -68,15 +91,15 @@
                         <p class="font-weight-bold mb-1">Select Region: </p>
                         <form>
                             <div class="form-row">
-                              <div class="col-7">
-                                <input type="text" class="form-control" placeholder="City">
-                              </div>
-                              <div class="col">
-                                <input type="text" class="form-control" placeholder="State">
-                              </div>
-                              <div class="col">
-                                <input type="text" class="form-control" placeholder="Zip">
-                              </div>
+                                <div class="col-6" id="cityDiv">
+                                    <input type="text" class="form-control" placeholder="City" id="city" required>
+                                </div>
+                                <div class="col" id="stateDiv">
+                                    <input type="text" class="form-control" placeholder="State" id="state" required>
+                                </div>
+                                <div class="col" id="zipDiv">
+                                    <input type="text" class="form-control" placeholder="Zip" id="zip" required>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -84,14 +107,15 @@
                 <!-- Select Category -->
                 <div class="row">
                     <div class="col">
-                        <form>
+                        <form class="was-validated">
                             <div class="form-group">
                                 <label for="selectCategory">Select Category: </label>
-                                <select class="form-control form-control-lg" id="selectCategory">
+                                <select class="custom-select form-control form-control-lg" id="selectCategory" required>
                                     <option></option>
-                                    <option>Restaurants</option>
-                                    <option>Local & Nearby Events</option>
+                                    <option id="restaurants">Restaurants</option>
+                                    <option id="events">Local & Nearby Events</option>
                                 </select>
+                                <div class="invalid-feedback">Please select a category</div>
                             </div>
                         </form>
                     </div>
@@ -104,10 +128,12 @@
                 </div>
             </div>
             <!-- Google Map Display -->
-            <div class="col-8 text-center" id="map"></div>
+            <div class="col-8 text-center border" id="map">
+
+            </div>
         </div>
         <br />
-​
+        ​
         <div class="row">
             <!-- User Planner -->
             <div class="col-6">
@@ -115,12 +141,14 @@
                     <div class="card-header">
 
                         <button type="button" class="float-right ml-3 rounded" id="calendar">
-                            <span class="glyphicon glyphicon-calendar" data-toggle="collapse" data-target="#addDate" aria-expanded="false" aria-controls="addDate"></span>
+                            <span class="glyphicon glyphicon-calendar" data-toggle="collapse" data-target="#addDate"
+                                aria-expanded="false" aria-controls="addDate"></span>
                         </button>
                         <button type="button" class="float-right rounded" id="addPersonalEvents">
-                            <span class="glyphicon glyphicon-plus-sign" data-toggle="collapse" data-target="#addPersonal" aria-expanded="false" aria-controls="addPersonal"></span>
+                            <span class="glyphicon glyphicon-plus-sign" data-toggle="collapse"
+                                data-target="#addPersonal" aria-expanded="false" aria-controls="addPersonal"></span>
                         </button>
-                        <p class="m-0">My To-Do Planner</p>
+                        <p class="m-0 pl-5" id="toDo">My To-Do Planner</p>
                     </div>
                     <div class="card-body" id="toDoPlanner">
                         <!-- Calendar -->
@@ -131,8 +159,10 @@
                                         <form>
                                             <div class="form-group">
                                                 <label for="inputDate">Date:</label>
-                                                <input class="form-control form-control-sm text-primary date mb-1" type="date" id="start-date">
-                                                <button type="button" class="btn btn-xs btn-primary">Submit</button>
+                                                <input class="form-control form-control-sm text-primary date mb-1"
+                                                    type="date" id="start-date">
+                                                <button type="button" class="btn btn-xs btn-primary"
+                                                    id="dateSubmit">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -148,7 +178,8 @@
                                             <div class="form-group m-0">
                                                 <label for="comment">Add/Create Your Own Events:</label>
                                                 <textarea class="form-control mb-1" rows="5" id="comment"></textarea>
-                                                <button type="button" class="btn btn-xs btn-primary">Submit</button>
+                                                <button type="button" class="btn btn-xs btn-primary"
+                                                    id="personalSubmit">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -162,7 +193,7 @@
                     </div>
                 </div>
             </div>
-​
+            ​
             <!-- Display List -->
             <div class="col-6">
                 <div class="card">
@@ -170,7 +201,9 @@
                         Search Results
                     </div>
                     <div class="card-body">
-​
+                        ​ <div id="searchResults">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -187,4 +220,5 @@
 
 </body>
 ​
+
 </html>

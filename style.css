@@ -2,16 +2,22 @@
     box-sizing: border-box;
     /* overflow: auto; */
 }
-#category{
-    margin-right: 40px;
-    top: 290px;
-    right: 0;
+#letsGo{
+    background-color: gold;
 }
-/* .row{
-    margin-top: 350px !important;
-} */
 #initialP{
     font-size: 26px;
+    font-family: 'Libre Baskerville', serif;
+}
+#welcome{
+    font-family: 'Niconne', cursive;
+    font-weight: bold;
+    font-size: 55px;
+}
+#duh{
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 70px;
+    font-weight: normal;
 }
 body { 
     background: url(travelPage.jpg) no-repeat center center fixed; 
@@ -23,7 +29,7 @@ body {
 #searchRegion, #plannerPage{
     background: rgba(255, 255, 255, 0.699);
 }
-#selectedRegion{
+.selectedRegion{
     background-color: darksalmon;
 }
 #searchRegion{
@@ -35,12 +41,18 @@ body {
 }
 #map{
     /* margin-left: 5px; */
+    height: 800px;
     padding-top: 30px;
     padding-bottom: 30px;
 }
 img{
     max-width: 100%;
     height: auto;
+}
+#toDo{
+    font-family: 'Codystar', cursive;
+    font-size: 25px;
+    color: black;
 }
 .glyphicon-plus-sign:hover{
     color: rgba(32, 178, 171, 0.719);
