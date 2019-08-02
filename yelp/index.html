@@ -21,9 +21,18 @@
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
     <!-- <link rel="stylesheet" href="style.css"> -->
     <!-- Google Maps CDN -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk"
-    async defer></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk"
+    async defer></script> -->
     <title>Duh! Travel Planner</title>
+        <!-- JavaScript Link -->
+    <!-- <script type="text/javascript" src="code.js"></script> -->
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- Bootstrap JavaScript CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRvnGMMVBNQ0762atQz6C1_-pIL29DCrQ&libraries=places&callback=initMap" -->
+    async defer></script>
+
 </head>
 ​
 <body>
@@ -65,15 +74,15 @@
                 <!-- Reselect Region -->
                 <div class="row">
                     <div class="col mb-4">
-                        <p class="font-weight-bold mb-1">Select Region: </p>
+                        <p class="font-weight-bold mb-1">Fill in  Food City, & State: </p>
                         <form>
                             <div class="form-row">
                               <div class="col-7">
-                                <input type="text" class="form-control" id="city" placeholder="City">
+                                <input type="text" class="form-control" id="pac-input" placeholder="City">
                               </div>
-                              <div class="col">
+                              <!-- <div class="col">
                                 <input type="text" class="form-control" id="state" placeholder="State">
-                              </div>
+                              </div> -->
                               <!-- <div class="col">
                                 <input type="text" class="form-control" placeholder="Zip">
                               </div> -->
@@ -86,12 +95,28 @@
                     <div class="col">
                         <form id="type-selector" class="pac-controls">
                             <div class="form-group">
-                                <label for="selectCategory">Select Category: </label>
-                                <select class="form-control form-control-lg" id="selectCategory">
+                                <label for="selectCategory"></label>
+                                <p type="" name="type" id="changetype-all" checked="checked">
+                                <label for="changetype-all"></label>
+                      
+                                <p type="" name="type" id="changetype-establishment">
+                                <label for="changetype-establishment"></label>
+                      
+                                <p type="" name="type" id="changetype-address">
+                                <label for="changetype-address"></label>
+                      
+                                <p type="" name="type" id="changetype-geocode">
+                                <label for="changetype-geocode"></label>
+                              </div>
+                              <div id="strict-bounds-selector" class="pac-controls">
+                                <p id="use-strict-bounds" value="">
+                                <label for="use-strict-bounds"></label>
+                      
+                                <!-- <select class="form-control form-control-lg" id="selectCategory">
                                     <option></option>
                                     <option id="type-selector">Restaurants</option>
                                     <option>Local & Nearby Events</option>
-                                </select>
+                                </select> -->
                             </div>
                         </form>
                     </div>
@@ -183,12 +208,7 @@
         <br />
     </div>
     <br />
-    <!-- JavaScript Link -->
-    <!-- <script type="text/javascript" src="code.js"></script> -->
-    <!-- jQuery CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <!-- Bootstrap JavaScript CDN -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRvnGMMVBNQ0762atQz6C1_-pIL29DCrQ&libraries=places&callback=initMap"
     async defer></script>
 
