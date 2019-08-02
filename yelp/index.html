@@ -84,12 +84,12 @@
                 <!-- Select Category -->
                 <div class="row">
                     <div class="col">
-                        <form>
+                        <form id="type-selector" class="pac-controls">
                             <div class="form-group">
                                 <label for="selectCategory">Select Category: </label>
                                 <select class="form-control form-control-lg" id="selectCategory">
                                     <option></option>
-                                    <option>Restaurants</option>
+                                    <option id="type-selector">Restaurants</option>
                                     <option>Local & Nearby Events</option>
                                 </select>
                             </div>
@@ -105,6 +105,11 @@
             </div>
             <!-- Google Map Display -->
             <div class="col-8 text-center" id="map"></div>
+            <div id="infowindow-content">
+                <img src="" width="16" height="16" id="place-icon">
+                <span id="place-name"  class="title"></span><br>
+                <span id="place-address"></span>          
+            </div>
         </div>
         <br />
 ​
@@ -184,6 +189,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JavaScript CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRvnGMMVBNQ0762atQz6C1_-pIL29DCrQ&libraries=places&callback=initMap"
+    async defer></script>
+
     <script type="text/javascript" src="assets/app.js"></script>
 
 </body>

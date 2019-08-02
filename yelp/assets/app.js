@@ -103,7 +103,7 @@ function initMap() {
     infowindowContent.children['place-name'].textContent = place.name;
     infowindowContent.children['place-address'].textContent = address;
     infowindow.open(map, marker);
-    google.maps.places.PlaceResult
+    // google.maps.places.PlaceResult
   });
 
   // Sets a listener on a radio button to change the filter type on Places
