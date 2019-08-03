@@ -25,8 +25,8 @@
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <!-- Google Maps CDN -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk" async
-        defer></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk" async
+        defer></script> -->
     <!-- Moment.js Reference -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>   
     <title>Duh! Travel Planner</title>
@@ -41,7 +41,7 @@
                 <div class="col" id="initialRow">
                     <h1 class="mb-1 text-right" id="initialP">Where would you like to visit in the United States?</h1>
 
-                    <input type="text" class="form-control mb-2" id="areaInput"
+                    <input type="text" class="form-control mb-2" id="city"
                         placeholder="Search by City, State or Zip Code..." required>
 
                     <button type="button" class="btn" id="letsGo"><i class="fa fa-plane"></i>&nbsp;&nbsp;&nbsp;Let's
@@ -95,7 +95,7 @@
                                 <p class="font-weight-bold mb-1">Select Region: </p>
                                 <div class="form-row">
                                     <div class="col" id="cityDiv">
-                                        <input type="text" class="form-control" placeholder="City" id="city" required>
+                                        <input type="text" class="form-control" placeholder="City" id="city2" required>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +142,11 @@
             </div>
             <!-- Google Map Display -->
             <div class="col-8 text-center border" id="map">
-
+            </div>
+            <div id="infowindow-content">
+                <img src="" width="16" height="16" id="place-icon">
+                <span id="place-name"  class="title"></span><br>
+                <span id="place-address"></span>          
             </div>
         </div>
         <br />
@@ -225,7 +229,7 @@
                     </div>
                     <div class="card-body" id="eventCB">
                         ​ <div id="searchResults">
-
+                            
                             <!-- <div id="event-0" class="border p-4">
                                 <h4 class="font-weight-bold" id="eventName-0">Conciertos Originales con La Arrolladora y Hijos de Barrón (Solo 21+)</h4>
                                 <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F66892549%2F265202274341%2F1%2Foriginal.20190729-205332?auto=compress&s=cf627f209cf7d8acc2d94453211ed941" alt="Conciertos Originales con La Arrolladora y Hijos de Barrón (Solo 21+)">
@@ -247,12 +251,15 @@
         <br />
     </div>
     <br />
-    <!-- JavaScript Link -->
-    <script type="text/javascript" src="code.js"></script>
     <!-- jQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JavaScript CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Google Places Initializer -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRvnGMMVBNQ0762atQz6C1_-pIL29DCrQ&libraries=places&callback=initMap"
+   async defer></script>
+    <!-- JavaScript Link -->
+    <script type="text/javascript" src="code.js"></script>
 
 </body>
 
