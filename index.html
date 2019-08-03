@@ -27,6 +27,8 @@
     <!-- Google Maps CDN -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnUfSCqZPdNjvX75NmaT2OZBIESsnfFHk" async
         defer></script>
+    <!-- Moment.js Reference -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>   
     <title>Duh! Travel Planner</title>
 </head>
 ​
@@ -85,23 +87,34 @@
                         </div>
                     </div>
                 </div>
-                <!-- Reselect Region -->
+                <!-- Reselect Region & Radius-->
                 <div class="row">
                     <div class="col mb-4">
-                        <p class="font-weight-bold mb-1">Select Region: </p>
-                        <form>
-                            <div class="form-row">
-                                <div class="col-6" id="cityDiv">
-                                    <input type="text" class="form-control" placeholder="City" id="city" required>
-                                </div>
-                                <div class="col" id="stateDiv">
-                                    <input type="text" class="form-control" placeholder="State" id="state" required>
-                                </div>
-                                <div class="col" id="zipDiv">
-                                    <input type="text" class="form-control" placeholder="Zip" id="zip" required>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="font-weight-bold mb-1">Select Region: </p>
+                                <div class="form-row">
+                                    <div class="col" id="cityDiv">
+                                        <input type="text" class="form-control" placeholder="City" id="city" required>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="selectRadius">Select Radius (miles)</label>
+                                    <select class="form-control form-control-lg" id="radius">
+                                        <option></option>
+                                        <option>5</option>
+                                        <option>10 </option>
+                                        <option>15 </option>
+                                        <option>20 </option>
+                                        <option>25 </option>
+                                        <option>30 </option>
+                                        <option>35 </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Select Category -->
@@ -135,7 +148,7 @@
         <br />
         ​
         <div class="row">
-            <!-- User Planner -->
+            <!-- User Planner & Calender head buttons-->
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
@@ -151,7 +164,7 @@
                         <p class="m-0 pl-5" id="toDo">My To-Do Planner</p>
                     </div>
                     <div class="card-body" id="toDoPlanner">
-                        <!-- Calendar -->
+                        <!-- User Planner & Calendar collapse box -->
                         <div class="row">
                             <div class="col">
                                 <div class="collapse" id="addDate">
@@ -188,6 +201,15 @@
                         </div>
                         <!-- User Planner -->
                         <div id="userPlanner">
+                            <!-- <p class="plannerDate"><span class="glyphicon glyphicon-bookmark" data-target="#plannerDate" aria-expanded="false" aria-controls="plannerDate"></span> 9/15/2019 </p> -->
+                            
+                            <!-- <p class="ml-5 personalEvent"><span class="	glyphicon glyphicon-hand-right" data-target="#personalEvent" aria-expanded="false" aria-controls="personalEvent"></span>&nbsp;&nbsp;Have to go eat with family tonight</p> -->
+
+                            <!-- <div class="border p-2" id="userSelectEvent-0">
+                                <p>LOS ANGELES CAREER FAIR - SALES & PROFESSIONAL JOB FAIR - September 11, 2019</p>
+                                <p>Start Date: 09/11/19 11:30 AM</p>
+                                <p>As If! Artfonfa proudly presents ALL THAT 90's Art Exhibition (brought to you by a 90s kid for 90s kids!) Join us for a totally bangin' nig</p>
+                            </div> -->
 
                         </div>
                     </div>
@@ -198,13 +220,27 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header text-center">
-                        Search Results
+                        <p class="my-2 font-weight-bold" id="resultHeader">Search Results</p>
+                        <p class="text-center m-0">(Please select the checkbox if you wish to add in to your planner.)</p>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="eventCB">
                         ​ <div id="searchResults">
 
+                            <!-- <div id="event-0" class="border p-4">
+                                <h4 class="font-weight-bold" id="eventName-0">Conciertos Originales con La Arrolladora y Hijos de Barrón (Solo 21+)</h4>
+                                <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F66892549%2F265202274341%2F1%2Foriginal.20190729-205332?auto=compress&s=cf627f209cf7d8acc2d94453211ed941" alt="Conciertos Originales con La Arrolladora y Hijos de Barrón (Solo 21+)">
+                                <p id="eventDate-0" class="font-weight-bold"><u>Start Date:</u> 2019-08-31T17:00:00</p>
+                                <p id="eventInfo-0" class="m-0">Conciertos Originales Miller Solo 2019 (Mayores de 21 Años)Disfruta de lo mejor de la música regional mexicana con La Arrolladora y Los Hijo</p>
+                                <div class="form-check text-center">
+                                    <input data-eventBox="0" class="form-check-input" type="checkbox">
+                                </div>
+                                <br />
+                            </div> -->
+
+                            
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary rounded-0" id="addToPlanner">Add to Planner</button>
                 </div>
             </div>
         </div>
@@ -219,6 +255,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
-​
 
 </html>

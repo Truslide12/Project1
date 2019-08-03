@@ -1,6 +1,5 @@
 *{
     box-sizing: border-box;
-    /* overflow: auto; */
 }
 #letsGo{
     background-color: gold;
@@ -62,5 +61,19 @@ img{
 }
 .card-body{
     clear: float; 
+}
+#resultHeader{
+    font-size: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: darkblue;
+}
+#eventCB{
+    height: 900px;
+    background-color: plum;
+    overflow: auto;
+}
+#toDoPlanner{
+    height: 965px;
+    overflow: auto;
 }
 
