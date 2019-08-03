@@ -18,7 +18,12 @@ var database = firebase.database();
 
 // A global array of objects with event Lat/Long & address
 var eventLatLongAddress = [];
+
+var submitStr = '';
+
 // Google Map Display
+var address;
+var place;
 var map;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -259,10 +264,19 @@ function initMap() {
     anchorPoint: new google.maps.Point(0, -29)
   });
 
-  autocomplete.addListener('place_changed', function () {
+  $("#submit-button").on("click", function (event) {
+    event.preventDefault();
+    console.log("clicked");
+    submitStr = 'place_changed';
+    // console.log(submitStr);
+  });
+
+  submitStr = "place_changed";
+  autocomplete.addListener(submitStr, function () {
+    console.log(submitStr);
     infowindow.close();
     marker.setVisible(false);
-    var place = autocomplete.getPlace();
+    place = autocomplete.getPlace();
     console.log(place);
     console.log(place.name);
     console.log(place.place_id);
@@ -291,48 +305,65 @@ function initMap() {
 
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
-    var address = '';
-    if (place.address_components) {  
+    address = '';
+    if (place.address_components) {
       address = [
         (place.address_components[0] && place.address_components[0].short_name || ''),
         (place.address_components[1] && place.address_components[1].short_name || ''),
         (place.address_components[2] && place.address_components[2].short_name || '')
       ].join(' ');
-    
-    //DOM DISPLAY
-    $("#searchResults").append('Name: ' + place.name + "<br />" + 'Address: ' + address + "<br />" + "Phone Number: " + place.formatted_phone_number + "<br />" + 'Operation Hours: ' + place.opening_hours.weekday_text + "<br />" + 'Rating: '+ place.rating + "<br />" + 'Price Range: ' + place.price_level + "<br />" + 'Google Place ID: ' + place.place_id); 
-  }
 
-  infowindowContent.children['place-icon'].src = place.icon;
+      // var restaurants = {
+      //   placeName: place.name,
+      //   placeAddress: address,
+      //   placePhoneNumber: place.formatted_phone_number,
+      //   placeOpHours: place.opening_hours.weekday_text,
+      //   placeRating: place.rating,
+      //   placePriceLvl: place.price_level,
+      //   placeID: place.place_id
+      // };
+
+      // displayRest(restaurants);
+      //DOM DISPLAY
+      // console.log(place.name);
+      // $("title").append(place.name);
+      
+    }
+
+    infowindowContent.children['place-icon'].src = place.icon;
     infowindowContent.children['place-name'].textContent = place.name;
     infowindowContent.children['place-address'].textContent = address;
     infowindow.open(map, marker);
-  });
+
+
+    submitStr = '';
+  })
+
 
   var center = new google.maps.LatLng();
-    var request = {
-      location: center,
-      radius: 32000,
-      types: ['bars', 'restaurants', 'cafe'],
-    };
-    var service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, callback);
+  var request = {
+    location: center,
+    radius: 32000,
+    types: ['bars', 'restaurants', 'cafe'],
+  };
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
 
 }
 
-function callback(results, status){
-  if (status == google.maps.places.PlacesServiceStatus.OK){
-    for (var i = 0; i < results.length; i++){
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
       createMarker(results[i]);
     }
   }
 }
-function createMarker (place){
+function createMarker(place) {
   placeLoc = place.geometry.location
   marker = new google.maps.Marker({
-    map:map,
+    map: map,
     position: place.geometry.location,
-    icon: photos[0].getUrl({maxWidth: 35, maxHeight: 35})
+    icon: photos[0].getUrl({ maxWidth: 35, maxHeight: 35 })
   })
 }
 
@@ -377,7 +408,7 @@ function eventbrite(input, r) {
     // Log the resulting Object 
     console.log(queryURL);
     console.log(response);
-    console.log(response.events);
+    // console.log(response.events);
 
     // Create a variable for events array
     var eventsArr = response.events;
@@ -438,7 +469,7 @@ function eventDisplay(arr) {
     eventLatLongAddress.push(latLongAddressObj);
 
   }
-  console.log(eventLatLongAddress);
+  // console.log(eventLatLongAddress);
 }
 // BUTTON CLICKS
 // ==============================================================================
@@ -474,16 +505,16 @@ $("#letsGo").on("click", function (event) {
 });
 
 // User Select (Region & Category) Submit button clicked
-$("#submit").on("click", function (event) {
+$("#submit-button").on("click", function (event) {
   event.preventDefault();
   // Grab user region input 
   var userCity = $("#city2").val().trim();
   var userRadius = $("#radius").val().trim();
   var userCatergory = $("#selectCategory").val().trim();
 
-  console.log(userCity);
-  console.log(userRadius);
-  console.log(userCatergory);
+  // console.log(userCity);
+  // console.log(userRadius);
+  // console.log(userCatergory);
 
   // If user did and didn't input Region city (require user to input region)
   if (userCity === "") {
@@ -505,7 +536,13 @@ $("#submit").on("click", function (event) {
       displayRegion(userCity);
     } else if (userCatergory === "Restaurants") {
       displayRegion(userCity);
-      
+      $("#searchResults").append('Name: ' + place.name + "<br />" + 'Address: ' + address + "<br />" + "Phone Number: " + place.formatted_phone_number + "<br />" + 'Operation Hours: ' + place.opening_hours.weekday_text + "<br />" + 'Rating: ' + place.rating + "<br />" + 'Price Range: ' + place.price_level + "<br />" + 'Google Place ID: ' + place.place_id);
+      // console.log(pName);
+      // console.log(pAddress);
+      // console.log(pOpHours);
+      // console.log(pPhone);
+      // console.log(pPrice);
+      // console.log(pID);
     }
   }
 });
@@ -612,11 +649,18 @@ $("#personalSubmit").on("click", function () {
 // ==============================================================================
 // "document.ready" makes sure that our JavaScript doesn't get run until the HTML document is finished loading.
 $(document).ready(function () {
+
+  // $("#submit-button").on("click", function(event) {
+  //   event.preventDefault();
+  //   console.log("clicked");
+  //   submitStr = 'place_changed';
+  //   console.log(submitStr);
+  // });
   // Hide Main Page initially
   // $("#plannerPage").hide();
 
   // Google Map Display 
-  initMap();
+  // initMap();
 
   // Trash Button clicked
   // Because we are creating click events on "dynamic" content, we can't just use the usual "on" "click" syntax.
@@ -642,4 +686,5 @@ $(document).ready(function () {
     }
     console.log(checkboxArr);
   });
+
 });
