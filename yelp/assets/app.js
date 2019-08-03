@@ -306,8 +306,7 @@ console.log();
       ].join(' ');
 
       //DOM DISPLAY
-      $("#plug-display").append("<ul> <li>" + 'Name: ' + place.name + "</li> <li>" + 'Address: ' + address + "</li> <li>" + place.formatted_phone_number + "</li> <li>" + 'Rating: ' + place.rating + "</li> <li>" + place.opening_hours.weekday_text + "</li> <li>" + 'Price Range: ' + place.price_level + "</li> <li>" + 'Google Place ID: ' + place.place_id + "</li> </ul>");
-
+      $("#plug-display").append("<ul> <li>" + 'Name: ' + place.name + "</li> <li>" + 'Address: ' + address + "</li> <li>" + place.formatted_phone_number + "</li> <li>" + 'Rating: ' + place.opening_hours.weekday_text + "</li> <li>" + place.rating + "</li> <li>" + 'Price Range: ' + place.price_level + "</li> <li>" + 'Google Place ID: ' + place.place_id + "</li> </ul>");
     }
 
     infowindowContent.children['place-icon'].src = place.icon;
