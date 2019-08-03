@@ -254,7 +254,7 @@ console.log();
 
   // Set the data fields to return when the user selects a place.
   autocomplete.setFields(
-      ['address_components', 'geometry', 'icon', 'name', 'place_id', 'price_level', 'rating']);
+      ['address_components', 'geometry', 'icon', 'name', 'place_id', 'price_level', 'rating', 'opening_hours', 'formatted_phone_number']);
     
   var infowindow = new google.maps.InfoWindow();
   var infowindowContent = document.getElementById('infowindow-content');
@@ -273,6 +273,8 @@ console.log();
     console.log(place.place_id);
     console.log(place.rating);
     console.log(place.price_level);
+    console.log(place.opening_hours);
+    console.log(place.formatted_phone_number);
 
     if (!place.geometry) {
       // User entered the name of a Place that was not suggested and
@@ -304,7 +306,7 @@ console.log();
       ].join(' ');
 
       //DOM DISPLAY
-      $("#plug-display").append("<ul> <li>" + 'Name: ' + place.name + "</li> <li>" + 'Address: ' + address + "</li> <li>" + 'Rating: ' + place.rating + "</li> <li>" + 'Price Range: ' + place.price_level + "</li> <li>" + 'Google Place ID: ' + place.place_id + "</li> </ul>");
+      $("#plug-display").append("<ul> <li>" + 'Name: ' + place.name + "</li> <li>" + 'Address: ' + address + "</li> <li>" + place.formatted_phone_number + "</li> <li>" + 'Rating: ' + place.rating + "</li> <li>" + place.opening_hours.weekday_text + "</li> <li>" + 'Price Range: ' + place.price_level + "</li> <li>" + 'Google Place ID: ' + place.place_id + "</li> </ul>");
 
     }
 
