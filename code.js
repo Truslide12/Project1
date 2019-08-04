@@ -19,7 +19,7 @@ var database = firebase.database();
 // A global array of objects with event Lat/Long & address
 var eventLatLongAddress = [];
 
-var submitStr = '';
+// var submitStr = '';
 
 // Google Map Display
 var address;
@@ -247,9 +247,7 @@ function initMap() {
     ]
   });
   var input = document.getElementById('city');
-  var input2 = document.getElementById('city2');
   var autocomplete = new google.maps.places.Autocomplete(input);
-  var autocomplete = new google.maps.places.Autocomplete(input2);
 
   autocomplete.bindTo('bounds', map);
 
@@ -264,18 +262,19 @@ function initMap() {
     anchorPoint: new google.maps.Point(0, -29)
   });
 
-  $("#submit-button").on("click", function (event) {
-    event.preventDefault();
-    console.log("clicked");
-    submitStr = 'place_changed';
-    // console.log(submitStr);
-  });
+  // $("#submit-button").on("click", function (event) {
+  //   event.preventDefault();
+  //   console.log("clicked");
+  //   submitStr = 'place_changed';
+  //   // console.log(submitStr);
+  // });
 
-  submitStr = "place_changed";
-  autocomplete.addListener(submitStr, function () {
-    console.log(submitStr);
+  // submitStr = "place_changed";
+  autocomplete.addListener('place_changed', function () {
+    // console.log(submitStr);
     infowindow.close();
     marker.setVisible(false);
+    // made "place" global
     place = autocomplete.getPlace();
     console.log(place);
     console.log(place.name);
@@ -313,20 +312,6 @@ function initMap() {
         (place.address_components[2] && place.address_components[2].short_name || '')
       ].join(' ');
 
-      // var restaurants = {
-      //   placeName: place.name,
-      //   placeAddress: address,
-      //   placePhoneNumber: place.formatted_phone_number,
-      //   placeOpHours: place.opening_hours.weekday_text,
-      //   placeRating: place.rating,
-      //   placePriceLvl: place.price_level,
-      //   placeID: place.place_id
-      // };
-
-      // displayRest(restaurants);
-      //DOM DISPLAY
-      // console.log(place.name);
-      // $("title").append(place.name);
       
     }
 
@@ -336,8 +321,8 @@ function initMap() {
     infowindow.open(map, marker);
 
 
-    submitStr = '';
-  })
+    // submitStr = '';
+  });
 
 
   var center = new google.maps.LatLng();
@@ -365,6 +350,30 @@ function createMarker(place) {
     position: place.geometry.location,
     icon: photos[0].getUrl({ maxWidth: 35, maxHeight: 35 })
   })
+}
+
+// Display restaurants in search results
+function restaurntDisplay(restaurantPlace){
+
+  var newDiv = $("<div>");
+  newDiv.addClass("border p-2");
+
+  var p = $("<p>").html('<b>Name: </b>' + restaurantPlace.name + "<br />" + '<b>Address: </b>' + address + "<br />" + "<b>Phone Number: </b>" + restaurantPlace.formatted_phone_number + "<br />" + '<b>Operation Hours: </b>' + restaurantPlace.opening_hours.weekday_text + "<br />" + '<b>Rating: </b>' + restaurantPlace.rating + "<br />" + '<b>Price Range: </b>' + restaurantPlace.price_level + "<br />" + '<b>Google Place ID: </b>' + restaurantPlace.place_id);
+  p.addClass("m-0 p-2");
+
+  var eventBoxDiv = $("<div>");
+  eventBoxDiv.addClass("form-check");
+  var eventBox = $("<input>");
+  eventBox.attr("data-eventBox", 0);
+  eventBox.attr("type", "checkbox");
+  eventBox.attr("data-state", "unclicked");
+  eventBox.addClass("form-check-input");
+  eventBoxDiv.append(eventBox);
+
+  newDiv.append(p);
+  newDiv.append(eventBoxDiv);
+  newDiv.append("<br />");
+  $("#searchResults").append(newDiv);
 }
 
 // Display region tag on side bar 
@@ -475,42 +484,20 @@ function eventDisplay(arr) {
 // ==============================================================================
 // Let's Go button Clicked
 var areaDisplayCount = 0;
+var userCatergory;
 $("#letsGo").on("click", function (event) {
   event.preventDefault();
-
-  // Get the "value" from the user input textbox from initial page and store it a variable
-  var areaInput = $("#city").val().trim();
-
-  // If User did not input anything
-  if (areaInput === "") {
-    //Invalid Input
-    $("#city").addClass("is-invalid");
-    $("#initialRow").append("<div class='area invalid-feedback'> Please provide a valid city & state or zip code. </div>");
-  } else {
-    // Valid input
-    $("#city").addClass("is-valid").removeClass("is-invalid");
-    $("div.area").remove();
-    // Enter Main Page once user provides valid input
-    // $("header").hide();
-    // $("#plannerPage").show();
-
-    displayRegion(areaInput);
-
-    eventbrite(areaInput, gUserRadius);
-
-    // Clear input
-    $("#city").val("");
-  }
-
+  $("header").hide();
+  $("#plannerPage").show();
 });
 
 // User Select (Region & Category) Submit button clicked
 $("#submit-button").on("click", function (event) {
   event.preventDefault();
   // Grab user region input 
-  var userCity = $("#city2").val().trim();
+  var userCity = $("#city").val().trim();
   var userRadius = $("#radius").val().trim();
-  var userCatergory = $("#selectCategory").val().trim();
+  userCatergory = $("#selectCategory").val().trim();
 
   // console.log(userCity);
   // console.log(userRadius);
@@ -518,9 +505,9 @@ $("#submit-button").on("click", function (event) {
 
   // If user did and didn't input Region city (require user to input region)
   if (userCity === "") {
-    $("#city2").addClass("is-invalid");
+    $("#city").addClass("is-invalid");
   } else {
-    $("#city2").addClass("is-valid").removeClass("is-invalid");
+    $("#city").addClass("is-valid").removeClass("is-invalid");
     $("#searchResults").empty();
 
     // Display things based on if user picked restaurants or events
@@ -536,25 +523,35 @@ $("#submit-button").on("click", function (event) {
       displayRegion(userCity);
     } else if (userCatergory === "Restaurants") {
       displayRegion(userCity);
-      $("#searchResults").append('Name: ' + place.name + "<br />" + 'Address: ' + address + "<br />" + "Phone Number: " + place.formatted_phone_number + "<br />" + 'Operation Hours: ' + place.opening_hours.weekday_text + "<br />" + 'Rating: ' + place.rating + "<br />" + 'Price Range: ' + place.price_level + "<br />" + 'Google Place ID: ' + place.place_id);
-      // console.log(pName);
-      // console.log(pAddress);
-      // console.log(pOpHours);
-      // console.log(pPhone);
-      // console.log(pPrice);
-      // console.log(pID);
+      restaurntDisplay(place);
     }
   }
 });
+
 
 // checkbox arr
 var checkboxArr = [];
 // Add to Planner button clicked
 $("#addToPlanner").on("click", function (event) {
   event.preventDefault();
-  displayEventInPlanner(checkboxArr);
-  checkboxArr = [];
+  if(userCatergory === "Local & Nearby Events"){
+    displayEventInPlanner(checkboxArr);
+    checkboxArr = [];
+  }else if(userCatergory === "Restaurants"){
+    displayRestaurantInPlanner(place);
+  }
 });
+
+// Display user selected restaurants in their planner
+function displayRestaurantInPlanner(restaurant){
+  var newRestaurant = {
+    rName: place.name,
+    rAddress: address,
+    rPhoneNum: place.formatted_phone_number 
+  }
+  // Uploads user selected restaurant to the database
+  database.ref().push(newRestaurant);
+}
 
 // Display user selected events in their planner
 function displayEventInPlanner(arr) {
@@ -582,6 +579,9 @@ function displayEventInPlanner(arr) {
 database.ref().on("child_added", function (childSnapshot) {
   console.log(childSnapshot.val());
 
+  var restName = childSnapshot.val().rName;
+  var restAddress = childSnapshot.val().rAddress;
+  var restPhoneNum = childSnapshot.val().rPhoneNum;
   var userplannerD = childSnapshot.val().plannerDate;
   var personalEvnt = childSnapshot.val().personalEvent;
   var evntName = childSnapshot.val().eventName;
@@ -589,7 +589,7 @@ database.ref().on("child_added", function (childSnapshot) {
   var evntInfo = childSnapshot.val().eventInfo;
   var evntIndex = childSnapshot.val().eventIndex;
 
-  // Dynamically creating elements to input in user planner
+  // Dynamically creating event elements to input in user planner
   var newDiv = $("<div>").append(
     $("<p>").text(evntName),
     $("<p>").text(evntDate),
@@ -597,6 +597,15 @@ database.ref().on("child_added", function (childSnapshot) {
   );
   newDiv.addClass("border p-2 m-1");
   newDiv.attr("id", "userSelectEvent-" + evntIndex);
+
+  // Dynamically creating restaurant elements to input in user planner
+  var newRestDiv = $("<div>");
+  newRestDiv.addClass("border p-5 m-2");
+
+  var pRest = $("<p>").html(restName + "<br /> Address: " + restAddress + "<br /> Phone Number: " + restPhoneNum);
+  pRest.addClass("m-0");
+
+  newRestDiv.append(pRest);
 
   var dateP = $("<p>").html("<span class='glyphicon glyphicon-bookmark' data-target='#plannerDate' aria-expanded='false' aria-controls='plannerDate'></span> " + userplannerD);
   dateP.addClass("mt-2 plannerDate");
@@ -614,6 +623,9 @@ database.ref().on("child_added", function (childSnapshot) {
   }
   if (personalEvnt != undefined) {
     $("#userPlanner").append(comment);
+  }
+  if(restName != undefined || restAddress != undefined || restPhoneNum != undefined){
+    $("#userPlanner").append(newRestDiv);
   }
 });
 
@@ -649,18 +661,11 @@ $("#personalSubmit").on("click", function () {
 // ==============================================================================
 // "document.ready" makes sure that our JavaScript doesn't get run until the HTML document is finished loading.
 $(document).ready(function () {
-
-  // $("#submit-button").on("click", function(event) {
-  //   event.preventDefault();
-  //   console.log("clicked");
-  //   submitStr = 'place_changed';
-  //   console.log(submitStr);
-  // });
   // Hide Main Page initially
-  // $("#plannerPage").hide();
+  $("#plannerPage").hide();
 
   // Google Map Display 
-  // initMap();
+  initMap();
 
   // Trash Button clicked
   // Because we are creating click events on "dynamic" content, we can't just use the usual "on" "click" syntax.
