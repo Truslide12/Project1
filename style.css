@@ -4,6 +4,10 @@
 #letsGo{
     background-color: gold;
 }
+#intro{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 18px;
+}
 #initialP{
     font-size: 26px;
     font-family: 'Libre Baskerville', serif;
@@ -13,7 +17,7 @@
     font-weight: bold;
     font-size: 55px;
 }
-#duh{
+.duh{
     font-family: 'Reenie Beanie', cursive;
     font-size: 70px;
     font-weight: normal;
@@ -26,7 +30,7 @@ body {
     background-size: cover;
 }
 #searchRegion, #plannerPage{
-    background: rgba(255, 255, 255, 0.699);
+    background: rgba(255, 255, 255, 0.767);
 }
 .selectedRegion{
     background-color: darksalmon;
