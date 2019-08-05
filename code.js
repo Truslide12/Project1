@@ -358,7 +358,7 @@ function restaurntDisplay(restaurantPlace){
   var newDiv = $("<div>");
   newDiv.addClass("border p-2");
 
-  var p = $("<p>").html('<b>Name: </b>' + restaurantPlace.name + "<br />" + '<b>Address: </b>' + address + "<br />" + "<b>Phone Number: </b>" + restaurantPlace.formatted_phone_number + "<br />" + '<b>Operation Hours: </b>' + restaurantPlace.opening_hours.weekday_text + "<br />" + '<b>Rating: </b>' + restaurantPlace.rating + "<br />" + '<b>Price Range: </b>' + restaurantPlace.price_level + "<br />" + '<b>Google Place ID: </b>' + restaurantPlace.place_id);
+  var p = $("<p>").html('<b>Name: </b>' + "<span id='resName-0'>" + restaurantPlace.name + "</span>" + "<br />" + '<b>Address: </b>' + address + "<br />" + "<b>Phone Number: </b>" + "<span id='resPhone-0'>" + restaurantPlace.formatted_phone_number + "</span>" + "<br />" + '<b>Operation Hours: </b>' + restaurantPlace.opening_hours.weekday_text + "<br />" + '<b>Rating: </b>' + restaurantPlace.rating + "<br />" + '<b>Price Range: </b>' + restaurantPlace.price_level + "<br />" + '<b>Google Place ID: </b>' + restaurantPlace.place_id);
   p.addClass("m-0 p-2");
 
   var eventBoxDiv = $("<div>");
@@ -512,6 +512,7 @@ $("#submit-button").on("click", function (event) {
 
     // Display things based on if user picked restaurants or events
     if (userCatergory === "Local & Nearby Events") {
+      checkboxArr = [];
       // If user did and didn't input radius
       if (userRadius === "") {
         // gUserRadius = 25;
@@ -522,6 +523,7 @@ $("#submit-button").on("click", function (event) {
       }
       displayRegion(userCity);
     } else if (userCatergory === "Restaurants") {
+      checkboxArr = [];
       displayRegion(userCity);
       restaurntDisplay(place);
     }
@@ -534,23 +536,37 @@ var checkboxArr = [];
 // Add to Planner button clicked
 $("#addToPlanner").on("click", function (event) {
   event.preventDefault();
-  if(userCatergory === "Local & Nearby Events"){
-    displayEventInPlanner(checkboxArr);
-    checkboxArr = [];
-  }else if(userCatergory === "Restaurants"){
-    displayRestaurantInPlanner(place);
+  if(checkboxArr !== []){
+    console.log(checkboxArr);
+    console.log("Is in here");
+    if(userCatergory === "Local & Nearby Events"){
+      // if(checkboxArr != []){
+        displayEventInPlanner(checkboxArr);
+      // }
+      checkboxArr = [];
+    }else if(userCatergory === "Restaurants"){
+      // if(checkboxArr == []){
+        displayRestaurantInPlanner(checkboxArr);
+      // }
+      checkboxArr = [];
+    }
   }
 });
 
 // Display user selected restaurants in their planner
-function displayRestaurantInPlanner(restaurant){
-  var newRestaurant = {
-    rName: place.name,
-    rAddress: address,
-    rPhoneNum: place.formatted_phone_number 
+function displayRestaurantInPlanner(arr){
+  for(var j = 0; j < arr.length; j++){
+    var restaurantName = $("#resName-" + arr[j]).text();
+    var restaurantPhone = $("#resPhone-" + arr[j]).text();
+
+    var newRestaurant = {
+      rName: restaurantName,
+      rAddress: address,
+      rPhoneNum: restaurantPhone
+    }
+    // Uploads user selected restaurant to the database
+    database.ref().push(newRestaurant);
   }
-  // Uploads user selected restaurant to the database
-  database.ref().push(newRestaurant);
 }
 
 // Display user selected events in their planner
@@ -591,18 +607,18 @@ database.ref().on("child_added", function (childSnapshot) {
 
   // Dynamically creating event elements to input in user planner
   var newDiv = $("<div>").append(
-    $("<p>").text(evntName),
+    $("<p>").html("<b> <span class='glyphicon glyphicon-pushpin' data-target='#restaurant' aria-expanded='false' aria-controls='restaurant'></span>&nbsp;&nbsp;&nbsp;&nbsp;" + evntName + "</b>"),
     $("<p>").text(evntDate),
     $("<p>").text(evntInfo),
   );
-  newDiv.addClass("border p-2 m-1");
+  newDiv.addClass("border p-3 m-2");
   newDiv.attr("id", "userSelectEvent-" + evntIndex);
 
   // Dynamically creating restaurant elements to input in user planner
   var newRestDiv = $("<div>");
-  newRestDiv.addClass("border p-5 m-2");
+  newRestDiv.addClass("border p-3 m-2");
 
-  var pRest = $("<p>").html(restName + "<br /> Address: " + restAddress + "<br /> Phone Number: " + restPhoneNum);
+  var pRest = $("<p>").html("<b> <span class='glyphicon glyphicon-cutlery' data-target='#restaurant' aria-expanded='false' aria-controls='restaurant'></span>&nbsp;&nbsp;&nbsp;&nbsp;" + restName + "</b>" + "<br /> Address: " + restAddress + "<br /> Phone Number: " + restPhoneNum);
   pRest.addClass("m-0");
 
   newRestDiv.append(pRest);
