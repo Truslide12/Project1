@@ -594,6 +594,7 @@ function displayEventInPlanner(arr) {
 
 database.ref().on("child_added", function (childSnapshot) {
   console.log(childSnapshot.val());
+  console.log(childSnapshot.key);
 
   var restName = childSnapshot.val().rName;
   var restAddress = childSnapshot.val().rAddress;
@@ -606,27 +607,49 @@ database.ref().on("child_added", function (childSnapshot) {
   var evntIndex = childSnapshot.val().eventIndex;
 
   // Dynamically creating event elements to input in user planner
+  var crossE = $("<button>");
+  crossE.text("x");
+  crossE.addClass("btn btn-outline-danger float-right cross");
   var newDiv = $("<div>").append(
+    crossE,
     $("<p>").html("<b> <span class='glyphicon glyphicon-pushpin' data-target='#restaurant' aria-expanded='false' aria-controls='restaurant'></span>&nbsp;&nbsp;&nbsp;&nbsp;" + evntName + "</b>"),
     $("<p>").text(evntDate),
     $("<p>").text(evntInfo),
   );
   newDiv.addClass("border p-3 m-2");
   newDiv.attr("id", "userSelectEvent-" + evntIndex);
+  newDiv.attr("data-fireBaseId", childSnapshot.key);
 
   // Dynamically creating restaurant elements to input in user planner
+  var crossR = $("<button>")
+  crossR.text("x");
+  crossR.addClass("btn btn-outline-danger float-right cross");
   var newRestDiv = $("<div>");
   newRestDiv.addClass("border p-3 m-2");
+  newRestDiv.attr("data-fireBaseId", childSnapshot.key);
 
   var pRest = $("<p>").html("<b> <span class='glyphicon glyphicon-cutlery' data-target='#restaurant' aria-expanded='false' aria-controls='restaurant'></span>&nbsp;&nbsp;&nbsp;&nbsp;" + restName + "</b>" + "<br /> Address: " + restAddress + "<br /> Phone Number: " + restPhoneNum);
   pRest.addClass("m-0");
 
+  newRestDiv.append(crossR);
   newRestDiv.append(pRest);
 
+  // Dynamically Create user planner Date
+  var crossD = $("<button>")
+  crossD.text("x");
+  crossD.addClass("btn btn-outline-danger float-right cross");
   var dateP = $("<p>").html("<span class='glyphicon glyphicon-bookmark' data-target='#plannerDate' aria-expanded='false' aria-controls='plannerDate'></span> " + userplannerD);
+  dateP.append(crossD);
+  dateP.attr("data-fireBaseId", childSnapshot.key);
   dateP.addClass("mt-2 plannerDate");
 
+  // Dynamically Create user planner comment for personal events
+  var crossC = $("<button>")
+  crossC.text("x");
+  crossC.addClass("btn btn-outline-danger float-right cross");
   var comment = $("<p>").html("<span class='glyphicon glyphicon-hand-right' data-target='#personalEvent' aria-expanded='false' aria-controls='personalEvent'></span>&nbsp;&nbsp;" + personalEvnt + "</p>");
+  comment.prepend(crossC);
+  comment.attr("data-fireBaseId", childSnapshot.key);
   comment.addClass("ml-5 personalEvent");
 
   // Add Selected Event/User Date/Personal Event in planner when user has selected any (undefined if not)
@@ -706,6 +729,17 @@ $(document).ready(function () {
       checkboxArr.splice(removeUnchecked, 1);
     }
     console.log(checkboxArr);
+  });
+
+  // User planner "x" button clicked
+  $(document.body).on("click", ".cross", function() {
+    var parent = this.parentElement;
+    var id = $(parent).attr("data-fireBaseId");
+    console.log(id);
+    // Remove selected event/restaurant from html page
+    parent.remove();
+    // Remove selected event/restaurant from firebase 
+    database.ref().child(id).remove();
   });
 
 });
