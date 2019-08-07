@@ -284,12 +284,12 @@ function initMap() {
     console.log(place.opening_hours);
     console.log(place.formatted_phone_number);
 
-    if (!place.geometry) {
+    /*if (!place.geometry) {
       // User entered the name of a Place that was not suggested and
       // pressed the Enter key, or the Place Details request failed.
       window.alert("No details available for input: '" + place.name + "'");
       return;
-    }
+    }*/
     // If the place has a geometry, then present it on a map.
     if (place.geometry.viewport) {
       map.fitBounds(place.geometry.viewport);
